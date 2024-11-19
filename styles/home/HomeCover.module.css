@@ -1,0 +1,7 @@
+.red_bg_btn {
+    @apply bg-brand_color px-2 py-1 my-4 font-semibold uppercase rounded-md cursor-pointer;
+}
+
+.sidebar_container {
+    @apply ml-4 px-2 max-w-min;
+}
