@@ -24,6 +24,35 @@ const TicketOrderForm = ({ event }: any) => {
   const { push } = useRouter();
 
   const [selectedTicket, setSelectedTicket] = useState<any>(event.tickets[0]);
+  const [guestQuantity, setGuestQuantity] = useState<number>(1);
+  const [guestTotalPrice, setGuestTotalPrice] = useState<number>(
+    selectedTicket.priceGuestPrimary
+  );
+
+  // New states for additional fields
+  const [isGuestSecondary, setIsGuestSecondary] = useState<boolean>(false);
+  const [priceGuestTertiary, setPriceGuestTertiary] = useState<number>(0);
+  const [priceSouvenir, setPriceSouvenir] = useState<number>(0);
+
+  const [guestSecondaryQuantity, setGuestSecondaryQuantity] = useState(0);
+  const [guestSecondaryTotalPrice, setGuestSecondaryTotalPrice] = useState(0);
+
+  const [souvenirQuantity, setSouvenirQuantity] = useState(0);
+  const [souvenirTotalPrice, setSouvenirTotalPrice] = useState(0);
+
+  // Calculate total amount
+  const calculateTotalAmount = () => {
+    const guestSecondaryPrice = isGuestSecondary
+      ? selectedTicket.priceGuestSecondary || 0
+      : 0;
+    return (
+      selectedTicket.price +
+      guestTotalPrice +
+      guestSecondaryPrice +
+      priceGuestTertiary +
+      priceSouvenir
+    );
+  };
 
   const orderTicketSchema = Yup.object().shape({
     name: Yup.string().required("This is required"),
@@ -141,7 +170,7 @@ const TicketOrderForm = ({ event }: any) => {
         }, 5000);
       });
   };
-  console.log(selectedTicket)
+  console.log(selectedTicket);
 
   return (
     <div
@@ -252,33 +281,191 @@ const TicketOrderForm = ({ event }: any) => {
                         </div>
                       </div> */}
                         <div className="h-full w-full p-4 text-start rounded-md bg-gray-600 text-white">
-                          <div className="font-semibold flex justify-start gap-10">
+                          <div className="font-semibold flex justify-between gap-10">
                             <div>
-                              <p className="text-lg font-semibold w-28">
-                                Price:
-                              </p>
+                              <p className="text-lg font-semibold">Price:</p>
                             </div>
                             <div>
-                              <span> {selectedTicket.price} BDT</span>
+                              <span>{selectedTicket.price} BDT</span>
                             </div>
                           </div>
-                          {selectedTicket.isGuestPrimary ? (<div className="font-semibold flex justify-start gap-10">
-                            <div>
-                              <p className="text-lg font-semibold w-28">
-                                Guest Price:
+                          <div className="flex flex-col gap-4 mt-4">
+                            <p className="text-lg">Guest Price:</p>
+
+                            {/* Guest Price */}
+                            <div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  Primary: ({selectedTicket.priceGuestPrimary}
+                                  BDT)
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="guestQuantity"
+                                  className="text-md"
+                                >
+                                  Qty:
+                                </label>
+                                <input
+                                  type="number"
+                                  id="guestQuantity"
+                                  name="guestQuantity"
+                                  value={guestQuantity}
+                                  min="1"
+                                  onChange={(e) => {
+                                    const quantity = Math.max(
+                                      1,
+                                      parseInt(e.target.value) || 1
+                                    );
+                                    setGuestQuantity(quantity);
+                                    setGuestTotalPrice(
+                                      quantity *
+                                        selectedTicket.priceGuestPrimary
+                                    );
+                                  }}
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2">
+                                <p className="text-md">=</p>
+                                <span>{guestTotalPrice} BDT</span>
+                              </div>
+                            </div>
+
+                            {/* Secondary Guest Price */}
+                            <div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  Secondary: (
+                                  {selectedTicket.priceGuestSecondary || 0} BDT)
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="guestSecondaryQuantity"
+                                  className="text-md"
+                                >
+                                  Qty:
+                                </label>
+                                <input
+                                  type="number"
+                                  id="guestSecondaryQuantity"
+                                  name="guestSecondaryQuantity"
+                                  value={guestSecondaryQuantity}
+                                  min="0"
+                                 
+                                  onChange={(e) => {
+                                    const quantity = Math.max(
+                                      0,
+                                      parseInt(e.target.value) || 0
+                                    );
+                                    setGuestSecondaryQuantity(quantity);
+                                    setGuestSecondaryTotalPrice(
+                                      quantity * selectedTicket.priceGuestSecondary
+                                    );
+                                  }}
+                                 
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <p className="text-md">=</p>
+                                <span>{guestSecondaryTotalPrice} BDT</span>
+                              </div>
+                            </div>
+
+                            {/* Tertiary Guest Price */}
+                            <div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  Tertiary: ({selectedTicket.priceGuestTertiary}{" "}
+                                  BDT)
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="priceGuestTertiary"
+                                  className="text-md"
+                                >
+                                  Qty:
+                                </label>
+                                <input
+                                  type="number"
+                                  id="priceGuestTertiary"
+                                  name="priceGuestTertiary"
+                                  value={priceGuestTertiary}
+                                  min="0"
+                                  onChange={(e) =>
+                                    setPriceGuestTertiary(
+                                      Math.max(0, parseInt(e.target.value) || 0)
+                                    )
+                                  }
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <p className="text-md">=</p>
+                                <span>{priceGuestTertiary} BDT</span>
+                              </div>
+                            </div>
+
+                            {/* Souvenir Price */}
+                            <div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  Souvenir: ({selectedTicket.priceSouvenir} BDT)
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="souvenirQuantity"
+                                  className="text-md"
+                                >
+                                  Qty:
+                                </label>
+                                <input
+                                  type="number"
+                                  id="souvenirQuantity"
+                                  name="souvenirQuantity"
+                                  value={souvenirQuantity}
+                                  min="0"
+                                  onChange={(e) => {
+                                    const quantity = Math.max(
+                                      0,
+                                      parseInt(e.target.value) || 0
+                                    );
+                                    setSouvenirQuantity(quantity);
+                                    setSouvenirTotalPrice(
+                                      quantity * selectedTicket.priceSouvenir
+                                    );
+                                  }}
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <p className="text-md">=</p>
+                                <span>{souvenirTotalPrice} BDT</span>
+                              </div>
+                            </div>
+
+                            {/* Total Amount */}
+                            <div className="flex justify-between items-center mt-6 text-lg">
+                              <p>Total Amount:</p>
+                              <p>
+                                {selectedTicket.price +
+                                  guestTotalPrice +
+                                  guestSecondaryTotalPrice +
+                                  priceGuestTertiary +
+                                  souvenirTotalPrice}
+                                BDT
                               </p>
                             </div>
-                            <div>
-                              <span> {selectedTicket.priceGuestPrimary} BDT</span>
-                            </div>
-                          </div>) : "AA"}
-
+                          </div>
 
                           <div className="my-2 mt-4 md:flex justify-start gap-10">
                             <div>
-                              <p className="text-lg font-semibold w-28">
-                                Description:
-                              </p>
+                              <p className="text-lg">Description:</p>
                             </div>
                             <div
                               className="rich_text -mt-4  -ml-4"
