@@ -18,6 +18,8 @@ const TicketForm = ({ setTicketData, setShowModal, seatData }: any) => {
   const [isNoneGuestTertiary, setIsNoneGuestTertiary] = useState(false)
   const [isFreeSouvenir, setIsFreeSouvenir] = useState(false)
   const [isNoneSouvenir, setIsNoneSouvenir] = useState(false)
+  const [isFreeTShirt, setIsFreeTShirt] = useState(false)
+  const [isNoneTShirt, setIsNoneTShirt] = useState(false)
   const remainingSeat = seatData.maxSeats - seatData.currentSeatCount; 
   const createTicketSchema = Yup.object().shape({
     package: Yup.string().required('Package is required'),
@@ -102,6 +104,21 @@ const TicketForm = ({ setTicketData, setShowModal, seatData }: any) => {
     setIsNoneSouvenir(true)
   }
 
+  const handlPaidTShirtStatus = () => {
+    setIsFreeTShirt(false)
+    setIsNoneTShirt(false)
+  }
+
+  const handlFreeTShirtStatus = () => {
+    setIsFreeTShirt(true)
+    setIsNoneTShirt(false)
+  }
+
+  const handlNoneTShirtStatus = () => {
+    setIsFreeTShirt(false)
+    setIsNoneTShirt(true)
+  }
+
   return (
     <div className=''>
       {/* <Breadcrumb from='giftCard' /> */}
@@ -144,6 +161,8 @@ const TicketForm = ({ setTicketData, setShowModal, seatData }: any) => {
               priceGuestTertiary: isFreeGuestTertiary || isNoneGuestTertiary ? 0 : values.priceGuestTertiary,
               isSouvenir: !isNoneSouvenir,
               priceSouvenir: isFreeSouvenir || isNoneSouvenir ? 0 : values.priceSouvenir,
+              isTShirt: !isNoneTShirt,
+              priceTShirt: isFreeTShirt || isNoneTShirt ? 0 : values.priceTShirt,
               isAcceptContribution: true,
             };
             // console.log(ticketDetails)
@@ -378,6 +397,52 @@ const TicketForm = ({ setTicketData, setShowModal, seatData }: any) => {
                   }
                 </div>
                 {/* Souvenir Ticket Price */}
+
+                {/* T-Shirt Ticket Price */}
+                <div className='relative flex justify-start items-center space-x-2 my-6'>
+                  <p className='w-32 font-semibold'>T-Shirt: </p>
+                  <div className='flex space-x-2 items-center w-40' onClick={() => handlPaidTShirtStatus()}>
+                    <Field type="radio" name="isTShirt" value='false' id='isTShirt' checked={!isFreeTShirt && !isNoneTShirt} />
+
+                    <label htmlFor='isTShirt'>Paid</label>
+                  </div>
+                  <div className='flex space-x-2 items-center w-40' onClick={() => handlFreeTShirtStatus()}>
+                    <Field type="radio" name="isTShirt" value='false' id='isTShirtFree' checked={isFreeTShirt && !isNoneTShirt} />
+
+                    <label htmlFor='isTShirtFree'>Free</label>
+                  </div>
+
+                  <div className='flex space-x-2 items-center w-40' onClick={() => handlNoneTShirtStatus()}>
+                    <Field type="radio" name="isTShirt" value='false' id='isisTShirtNone' checked={!isFreeTShirt && isNoneTShirt} />
+
+                    <label htmlFor='isisTShirtNone'>N/A</label>
+                  </div>
+                </div>
+
+                <div className='child_center'>
+                  {
+                    !isFreeTShirt && !isNoneTShirt ? <div className='relative flex_center w-full'>
+                      <label htmlFor="price" className='w-full'>T-Shirt Price:</label>
+                      <div className='w-full'>
+                        <Field
+                          name='priceTShirt'
+                          type='number'
+                          className='bg-gray-50 text-gray-800 text-red border-[1px] border-brand_color focus:outline-blue-300 focus:outline-1 text-sm py-1 h-10 w-full  px-2 rounded-md outline-none'
+                          placeholder='Guest Ticket price'
+                        />
+                        <div>
+                          {errors.priceTShirt && touched.priceTShirt ? (
+                            <small className='text-red-400 '>
+                              {errors.priceTShirt}
+                            </small>
+                          ) : null}
+                        </div>
+                      </div>
+
+                    </div> : null
+                  }
+                </div>
+                {/* T-Shirt Ticket Price */}
 
                 <div className='relative flex_center w-full col-span-2'>
                   <label htmlFor="package" className='w-full'>Package Name:</label>
