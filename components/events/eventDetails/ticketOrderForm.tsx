@@ -255,7 +255,7 @@ const TicketOrderForm = ({ event }: any) => {
                                 <option
                                   key={c.package}
                                   value={c._id}
-                                  className="text-black"
+                                  className="text-black" 
                                 >
                                   {c.package}
                                 </option>

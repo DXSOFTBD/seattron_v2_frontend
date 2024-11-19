@@ -1,4 +1,4 @@
-import { GoDashboard, GoRequestChanges } from 'react-icons/go';
+import { GoDash, GoQuestion } from 'react-icons/go';
 import {
   MdArrowDropDown,
   MdLocalOffer,
@@ -53,7 +53,7 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
     {
       name: 'Dashboard',
       path: '/admin/dashboard',
-      icon: GoDashboard,
+      icon: GoDash,
     },
     {
       name: 'Organizer',
@@ -110,7 +110,7 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
     {
       name: 'Request',
       path: '/admin/dashboard/request',
-      icon: GoRequestChanges,
+      icon: GoQuestion,
     },
     {
       name: 'Notice',

@@ -16,7 +16,7 @@ const EventDetails = ({ event, featuredEvents, upcomingEvents }: any) => {
       <div className='h-full w-full relative  bg-black text-center'>
         <Banner event={event} />
         <div className='w-full h-full bg-neutral-900 pt-4'>
-          {event?.tickets?.length && <TicketPerks event={event} />}
+          {event?.tickets?.length && <TicketPerks event={event} />} 
           {event?.tickets?.length && <TicketOrderForm event={event} />}
           {!event?.isPrivate ? <EventDescription event={event}></EventDescription> : null}
 
