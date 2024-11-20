@@ -16,6 +16,7 @@ const TicketOrderForm = ({ event }: any) => {
     userPhone,
     userPostal_code,
     userId_type,
+    isTShirt,
     userGuest_adult,
     userGuest_chield,
     userGuest_infant,
@@ -24,10 +25,8 @@ const TicketOrderForm = ({ event }: any) => {
   const { push } = useRouter();
 
   const [selectedTicket, setSelectedTicket] = useState<any>(event.tickets[0]);
-  const [guestQuantity, setGuestQuantity] = useState<number>(1);
-  const [guestTotalPrice, setGuestTotalPrice] = useState<number>(
-    selectedTicket.priceGuestPrimary
-  );
+  const [guestQuantity, setGuestQuantity] = useState<number>(0);
+  const [guestTotalPrice, setGuestTotalPrice] = useState<number>(0);
 
   // New states for additional fields
   const [isGuestSecondary, setIsGuestSecondary] = useState<boolean>(false);
@@ -39,6 +38,11 @@ const TicketOrderForm = ({ event }: any) => {
 
   const [souvenirQuantity, setSouvenirQuantity] = useState(0);
   const [souvenirTotalPrice, setSouvenirTotalPrice] = useState(0);
+
+  const [tshirtQuantity, setTShirtQuantity] = useState(0);
+  const [tshirtTotalPrice, setTShirtTotalPrice] = useState(0);
+
+  const [contributionAmount, setContributionAmount] = useState(0);
 
   // Calculate total amount
   const calculateTotalAmount = () => {
@@ -255,7 +259,7 @@ const TicketOrderForm = ({ event }: any) => {
                                 <option
                                   key={c.package}
                                   value={c._id}
-                                  className="text-black" 
+                                  className="text-black"
                                 >
                                   {c.package}
                                 </option>
@@ -283,20 +287,20 @@ const TicketOrderForm = ({ event }: any) => {
                         <div className="h-full w-full p-4 text-start rounded-md bg-gray-600 text-white">
                           <div className="font-semibold flex justify-between gap-10">
                             <div>
-                              <p className="text-lg font-semibold">Price:</p>
+                              <p className="text-lg font-semibold">Basic Entry Fee:</p>
                             </div>
                             <div>
                               <span>{selectedTicket.price} BDT</span>
                             </div>
                           </div>
-                          <div className="flex flex-col gap-4 mt-4">
-                            <p className="text-lg">Guest Price:</p>
+                          {selectedTicket.isGuestPrimary || selectedTicket.isGuestSecondary || selectedTicket.isGuestTertiary ? (<div className="flex flex-col gap-4 mt-4">
+                            <p className="text-lg">Guest Entry Fee:</p>
 
                             {/* Guest Price */}
-                            <div className="grid grid-cols-4 gap-4 items-center">
+                            {selectedTicket.isGuestPrimary ? (<div className="grid grid-cols-4 gap-4 items-center">
                               <div className="col-span-2">
                                 <p className="text-md">
-                                  Primary: ({selectedTicket.priceGuestPrimary}
+                                  Family: ({selectedTicket.priceGuestPrimary}
                                   BDT)
                                 </p>
                               </div>
@@ -305,23 +309,24 @@ const TicketOrderForm = ({ event }: any) => {
                                   htmlFor="guestQuantity"
                                   className="text-md"
                                 >
-                                  Qty:
+                                  Att:
                                 </label>
                                 <input
                                   type="number"
                                   id="guestQuantity"
                                   name="guestQuantity"
                                   value={guestQuantity}
-                                  min="1"
+                                  min="0"
+                                  max="2"
                                   onChange={(e) => {
                                     const quantity = Math.max(
-                                      1,
-                                      parseInt(e.target.value) || 1
+                                      0,
+                                      parseInt(e.target.value) || 0
                                     );
                                     setGuestQuantity(quantity);
                                     setGuestTotalPrice(
                                       quantity *
-                                        selectedTicket.priceGuestPrimary
+                                      selectedTicket.priceGuestPrimary
                                     );
                                   }}
                                   className="w-16 text-black px-2 py-1 border rounded"
@@ -331,13 +336,14 @@ const TicketOrderForm = ({ event }: any) => {
                                 <p className="text-md">=</p>
                                 <span>{guestTotalPrice} BDT</span>
                               </div>
-                            </div>
+                            </div>) : ""}
+
 
                             {/* Secondary Guest Price */}
-                            <div className="grid grid-cols-4 gap-4 items-center">
+                            {selectedTicket.isGuestSecondary ? (<div className="grid grid-cols-4 gap-4 items-center">
                               <div className="col-span-2">
                                 <p className="text-md">
-                                  Secondary: (
+                                  Children over 10y: (
                                   {selectedTicket.priceGuestSecondary || 0} BDT)
                                 </p>
                               </div>
@@ -346,7 +352,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   htmlFor="guestSecondaryQuantity"
                                   className="text-md"
                                 >
-                                  Qty:
+                                  Att:
                                 </label>
                                 <input
                                   type="number"
@@ -354,7 +360,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   name="guestSecondaryQuantity"
                                   value={guestSecondaryQuantity}
                                   min="0"
-                                 
+                                  max="2"
                                   onChange={(e) => {
                                     const quantity = Math.max(
                                       0,
@@ -365,7 +371,7 @@ const TicketOrderForm = ({ event }: any) => {
                                       quantity * selectedTicket.priceGuestSecondary
                                     );
                                   }}
-                                 
+
                                   className="w-16 text-black px-2 py-1 border rounded"
                                 />
                               </div>
@@ -373,13 +379,14 @@ const TicketOrderForm = ({ event }: any) => {
                                 <p className="text-md">=</p>
                                 <span>{guestSecondaryTotalPrice} BDT</span>
                               </div>
-                            </div>
+                            </div>) : ""}
+
 
                             {/* Tertiary Guest Price */}
-                            <div className="grid grid-cols-4 gap-4 items-center">
+                            {selectedTicket.isGuestTertiary ? (<div className="grid grid-cols-4 gap-4 items-center">
                               <div className="col-span-2">
                                 <p className="text-md">
-                                  Tertiary: ({selectedTicket.priceGuestTertiary}{" "}
+                                  Children below 10y: ({selectedTicket.priceGuestTertiary}{" "}
                                   BDT)
                                 </p>
                               </div>
@@ -388,7 +395,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   htmlFor="priceGuestTertiary"
                                   className="text-md"
                                 >
-                                  Qty:
+                                  Att:
                                 </label>
                                 <input
                                   type="number"
@@ -396,6 +403,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   name="priceGuestTertiary"
                                   value={priceGuestTertiary}
                                   min="0"
+                                  max="2"
                                   onChange={(e) =>
                                     setPriceGuestTertiary(
                                       Math.max(0, parseInt(e.target.value) || 0)
@@ -408,10 +416,12 @@ const TicketOrderForm = ({ event }: any) => {
                                 <p className="text-md">=</p>
                                 <span>{priceGuestTertiary} BDT</span>
                               </div>
-                            </div>
+                            </div>) : ""}
+                          </div>) : ""}
 
+                          {selectedTicket.isSouvenir || selectedTicket.isTShirt ? (<div className="flex flex-col gap-4 mt-4">
                             {/* Souvenir Price */}
-                            <div className="grid grid-cols-4 gap-4 items-center">
+                            {selectedTicket.isSouvenir ? (<div className="grid grid-cols-4 gap-4 items-center">
                               <div className="col-span-2">
                                 <p className="text-md">
                                   Souvenir: ({selectedTicket.priceSouvenir} BDT)
@@ -430,6 +440,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   name="souvenirQuantity"
                                   value={souvenirQuantity}
                                   min="0"
+                                  max="1"
                                   onChange={(e) => {
                                     const quantity = Math.max(
                                       0,
@@ -447,18 +458,104 @@ const TicketOrderForm = ({ event }: any) => {
                                 <p className="text-md">=</p>
                                 <span>{souvenirTotalPrice} BDT</span>
                               </div>
-                            </div>
+                            </div>) : ""}
 
+                            {/* T-Shirt Amount */}
+                            {selectedTicket.isTShirt ? (<div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  T-Shirt: ({selectedTicket.priceTShirt} BDT)
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="tshirtQuantity"
+                                  className="text-md"
+                                >
+                                  Qty:
+                                </label>
+                                <input
+                                  type="number"
+                                  id="tshirtQuantity"
+                                  name="tshirtQuantity"
+                                  value={tshirtQuantity}
+                                  min="0"
+                                  max="1"
+                                  onChange={(e) => {
+                                    const quantity = Math.max(
+                                      0,
+                                      parseInt(e.target.value) || 0
+                                    );
+                                    setTShirtQuantity(quantity);
+                                    setTShirtTotalPrice(
+                                      quantity * selectedTicket.priceTShirt
+                                    );
+                                  }}
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <p className="text-md">=</p>
+                                <span>{tshirtTotalPrice} BDT</span>
+                              </div>
+                            </div>) : ""}
+                          </div>) : ""}
+
+                          {selectedTicket.isAcceptContribution ? (<div className="flex flex-col gap-4 mt-4">
+                            <div className="grid grid-cols-4 gap-4 items-center">
+                              <div className="col-span-2">
+                                <p className="text-md">
+                                  Contribution/Donation:
+                                </p>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <label
+                                  htmlFor="contributionAmount"
+                                  className="text-md"
+                                >
+                                  Amt
+                                </label>
+                                <input
+                                  type="number"
+                                  id="contributionAmount"
+                                  name="contributionAmount"
+                                  value={contributionAmount}
+                                  min="1500"
+                                  onChange={(e) => {
+                                    const amount = Math.max(
+                                      0,
+                                      parseInt(e.target.value) || 0
+                                    );
+                                    setContributionAmount(amount);
+                                    // setContributionAmount(
+                                    //   amount * 1
+                                    // );
+                                  }}
+                                  className="w-16 text-black px-2 py-1 border rounded"
+                                />
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <p className="text-md">=</p>
+                                <span>{contributionAmount} BDT</span>
+                              </div>
+                            </div>
+                          </div>) : ""}
+
+
+                          <div className="flex flex-col gap-4 mt-4">
                             {/* Total Amount */}
                             <div className="flex justify-between items-center mt-6 text-lg">
                               <p>Total Amount:</p>
                               <p>
-                                {selectedTicket.price +
+                                {
+                                  selectedTicket.price +
                                   guestTotalPrice +
                                   guestSecondaryTotalPrice +
                                   priceGuestTertiary +
-                                  souvenirTotalPrice}
-                                BDT
+                                  souvenirTotalPrice +
+                                  contributionAmount
+                                } BDT
+
                               </p>
                             </div>
                           </div>
@@ -480,7 +577,7 @@ const TicketOrderForm = ({ event }: any) => {
                       </div>
                       <div className="flex flex-col space-y-4 text-white ">
                         <div className="flex items-center justify-start">
-                          <p className="w-full text-start">Name</p>
+                          <p className="w-full text-start">Full Name</p>
                           <div className="relative w-full">
                             <Field
                               name="name"
@@ -531,6 +628,36 @@ const TicketOrderForm = ({ event }: any) => {
                                 {errors.id_number && touched.id_number ? (
                                   <small className="text-red-300 text-sm absolute left-0 top-8">
                                     {errors.id_number}
+                                  </small>
+                                ) : null}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {isTShirt && (
+                          <div className="flex items-center justify-start">
+                            <div className="w-full">
+                              <p className="text-start"> T-Shirt Size</p>
+                            </div>
+                            <div className="relative w-full">
+                              <Field
+                                name="tshirtSize"
+                                type="tshirtSize"
+                                as="select"
+                                className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                placeholder="Enter T-Shirt Size"
+                              >
+                                <option>Select Size</option>
+                                <option value="Small">S</option>
+                                <option value="Medium">M</option>
+                                <option value="XLarge">XL</option>
+                                <option value="XXLarge">XXL</option>
+                              </Field>
+                              <div>
+                                {errors.tshirtSize && touched.tshirtSize ? (
+                                  <small className="text-red-300 text-sm absolute left-0 top-8">
+                                    {errors.tshirtSize}
                                   </small>
                                 ) : null}
                               </div>

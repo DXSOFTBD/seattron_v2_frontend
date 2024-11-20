@@ -146,6 +146,7 @@ const CreateEvent = () => {
     userCity: Yup.array(),
     userCountry: Yup.array(),
     userPostal_code: Yup.array(),
+    userTshirtSize: Yup.array(),
   });
 
   return (
@@ -351,6 +352,16 @@ const CreateEvent = () => {
                     <p className='w-44 text-gray-900'>Postal code:</p>
                     <small>
                       {eventData.userPostal_code ? (
+                        <TiTick className='text-green-600' />
+                      ) : (
+                        <MdClose className='text-red-600' />
+                      )}
+                    </small>
+                  </div>
+                  <div className='flex items-center justify-start space-x-2 my-2'>
+                    <p className='w-44 text-gray-900'>T-Shirt Size:</p>
+                    <small>
+                      {eventData.userTshirtSize ? (
                         <TiTick className='text-green-600' />
                       ) : (
                         <MdClose className='text-red-600' />
@@ -946,6 +957,21 @@ const CreateEvent = () => {
                           </div>
                           <p>Postal code</p>
                         </div>
+
+                        <div className='flex items-center justify-start '>
+                          <div className='toggle-switch '>
+                            <Field
+                              type='checkbox'
+                              name='userTshirtSize'
+                              value='userTshirtSize'
+                              className='toggle-input'
+                            />
+                            <label className='toggle-label' />
+                          </div>
+                          <p>T-Shirt Size</p>
+                        </div>
+
+
                         <div className='relative flex items-center justify-start space-x-3'>
                           <label htmlFor='' className='form_label w-full'>
                             Select id type:
@@ -960,7 +986,6 @@ const CreateEvent = () => {
                               None
                             </option>
                             <option value='NID'>NID</option>
-
                             <option value='passportID'>Passport ID</option>
                             <option value='studentID'>Student ID</option>
                             <option value='jobID'>Job ID</option>
