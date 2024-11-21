@@ -16,7 +16,6 @@ const TicketOrderForm = ({ event }: any) => {
     userPhone,
     userPostal_code,
     userId_type,
-    isTShirt,
     userGuest_adult,
     userGuest_chield,
     userGuest_infant,
@@ -29,7 +28,10 @@ const TicketOrderForm = ({ event }: any) => {
   const [guestTotalPrice, setGuestTotalPrice] = useState<number>(0);
 
   // New states for additional fields
+  const [isGuestPrimary, setIsGuestPrimary] = useState<boolean>(false);
   const [isGuestSecondary, setIsGuestSecondary] = useState<boolean>(false);
+  const [isGuestTertiary, setIsGuestTertiary] = useState<boolean>(false);
+
   const [priceGuestTertiary, setPriceGuestTertiary] = useState<number>(0);
   const [priceSouvenir, setPriceSouvenir] = useState<number>(0);
 
@@ -42,6 +44,7 @@ const TicketOrderForm = ({ event }: any) => {
   const [souvenirQuantity, setSouvenirQuantity] = useState(0);
   const [souvenirTotalPrice, setSouvenirTotalPrice] = useState(0);
 
+  const [isTShirt, setIsTshirt] = useState(false);
   const [tshirtQuantity, setTShirtQuantity] = useState(0);
   const [tshirtTotalPrice, setTShirtTotalPrice] = useState(0);
 
@@ -257,19 +260,24 @@ const TicketOrderForm = ({ event }: any) => {
                     gender: values.gender,
                     id_type: userId_type,
                     id_number: values.id_number,
+                    tshirtSize: values.tshirtSize,
                     occupation: values.occupation,
                     city: values.city,
                     country: values.country,
                     postal_code: values.postal_code,
-                    total_quantity: totalQuantity,
+                    // guest_total_quantity: totalQuantity,
                     contribution_amount: contributionAmount, // Add contribution amount
                     souvenir_quantity: souvenirQuantity, // Add souvenir quantity
                     total_amount: totalAmount, // Add total amount
-                    family: calculateTotalQuantityByCategory().family, // Add family quantity
-                    childrenOver10:
-                      calculateTotalQuantityByCategory().childrenOver10, // Add children over 10
-                    childrenBelow10:
-                      calculateTotalQuantityByCategory().childrenBelow10, // Add children below 10
+                    isGuestPrimary: selectedTicket.isGuestPrimary,
+                    guestPrimaryQty: calculateTotalQuantityByCategory().family, // Add family quantity
+                    isGuestSecondary: selectedTicket.isGuestSecondary,
+                    guestSecondaryQty: calculateTotalQuantityByCategory().childrenOver10, // Add children over 10
+                    isGuestTertiary: selectedTicket.isGuestTertiary,
+                    guestTertiaryQty: calculateTotalQuantityByCategory().childrenBelow10, // Add children below 10
+                    isTShirt: selectedTicket.isTShirt,
+                    isContribution: selectedTicket.isAcceptContribution,
+                    contributionAmount: contributionAmount
                   };
 
                   const newOrderDetails = Object.entries(orderDetails).reduce(
@@ -277,7 +285,7 @@ const TicketOrderForm = ({ event }: any) => {
                     {}
                   );
                   console.log("Order Details on Submit:", newOrderDetails);
-                  // createOrderHandler(newOrderDetails);
+                  createOrderHandler(newOrderDetails);
                 }}
               >
                 {({ errors, touched }: any) => (
@@ -303,6 +311,22 @@ const TicketOrderForm = ({ event }: any) => {
                                         ticket._id === e.target.value
                                     )
                                   );
+                                  setIsTshirt(event.tickets.find(
+                                    (ticket: any) =>
+                                      ticket._id === e.target.value
+                                  ).isTShirt);
+                                  // setIsGuestPrimary(event.tickets.find(
+                                  //   (ticket: any) =>
+                                  //     ticket._id === e.target.value
+                                  // ).isGuestPrimary);
+                                  // setIsGuestSecondary(event.tickets.find(
+                                  //   (ticket: any) =>
+                                  //     ticket._id === e.target.value
+                                  // ).isGuestSecondary);
+                                  // setIsGuestTertiary(event.tickets.find(
+                                  //   (ticket: any) =>
+                                  //     ticket._id === e.target.value
+                                  // ).isGuestTertiary);
                                 }}
                                 className="border-2 outline-none text-black bg-white w-full md:w-300  h-d8  text-sm px-2 py-1 rounded-md "
                               >
@@ -347,8 +371,8 @@ const TicketOrderForm = ({ event }: any) => {
                               </div>
                             </div>
                             {selectedTicket.isGuestPrimary ||
-                            selectedTicket.isGuestSecondary ||
-                            selectedTicket.isGuestTertiary ? (
+                              selectedTicket.isGuestSecondary ||
+                              selectedTicket.isGuestTertiary ? (
                               <div className="flex flex-col gap-4 mt-4">
                                 <p className="text-lg font-semibold">
                                   Guest Entry Fee:
@@ -386,7 +410,7 @@ const TicketOrderForm = ({ event }: any) => {
                                           setGuestQuantity(quantity);
                                           setGuestTotalPrice(
                                             quantity *
-                                              selectedTicket.priceGuestPrimary
+                                            selectedTicket.priceGuestPrimary
                                           );
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
@@ -434,7 +458,7 @@ const TicketOrderForm = ({ event }: any) => {
                                           setGuestSecondaryQuantity(quantity);
                                           setGuestSecondaryTotalPrice(
                                             quantity *
-                                              selectedTicket.priceGuestSecondary
+                                            selectedTicket.priceGuestSecondary
                                           );
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
@@ -483,7 +507,7 @@ const TicketOrderForm = ({ event }: any) => {
                                           setGuestTertiaryQuantity(quantity);
                                           setGuestTertiaryTotalPrice(
                                             quantity *
-                                              selectedTicket.priceGuestTertiary
+                                            selectedTicket.priceGuestTertiary
                                           );
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
@@ -503,7 +527,7 @@ const TicketOrderForm = ({ event }: any) => {
                             )}
 
                             {selectedTicket.isSouvenir ||
-                            selectedTicket.isTShirt ? (
+                              selectedTicket.isTShirt ? (
                               <div className="flex flex-col gap-4 mt-4">
                                 {/* Souvenir Price */}
                                 {selectedTicket.isSouvenir ? (
@@ -536,7 +560,7 @@ const TicketOrderForm = ({ event }: any) => {
                                           setSouvenirQuantity(quantity);
                                           setSouvenirTotalPrice(
                                             quantity *
-                                              selectedTicket.priceSouvenir
+                                            selectedTicket.priceSouvenir
                                           );
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
@@ -582,7 +606,7 @@ const TicketOrderForm = ({ event }: any) => {
                                           setTShirtQuantity(quantity);
                                           setTShirtTotalPrice(
                                             quantity *
-                                              selectedTicket.priceTShirt
+                                            selectedTicket.priceTShirt
                                           );
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
@@ -725,7 +749,7 @@ const TicketOrderForm = ({ event }: any) => {
                             </div>
                           )}
 
-                          {/* {isTShirt && ( */}
+                          {isTShirt && (
                             <div className="flex items-center justify-start">
                               <div className="w-full">
                                 <p className="text-start"> T-Shirt Size</p>
@@ -754,7 +778,7 @@ const TicketOrderForm = ({ event }: any) => {
                                 </div>
                               </div>
                             </div>
-                          {/* )} */}
+                          )}
 
                           {userPhone && (
                             <div className="flex items-center justify-start">
