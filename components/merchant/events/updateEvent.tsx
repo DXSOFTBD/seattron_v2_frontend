@@ -162,6 +162,7 @@ const UpdateEvent = (event: any) => {
     userCity: Yup.mixed(),
     userCountry: Yup.mixed(),
     userPostal_code: Yup.mixed(),
+    userTshirtSize: Yup.array(),
   });
 
   return (
@@ -370,6 +371,16 @@ const UpdateEvent = (event: any) => {
                       )}
                     </small>
                   </div>
+                  <div className='flex items-center justify-start space-x-2 my-2'>
+                    <p className='w-44 text-gray-900'>T-Shirt Size:</p>
+                    <small>
+                      {eventData.userTshirtSize ? (
+                        <TiTick className='text-green-600' />
+                      ) : (
+                        <MdClose className='text-red-600' />
+                      )}
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -443,6 +454,7 @@ const UpdateEvent = (event: any) => {
                     userCity: data.userCity,
                     userCountry: data.userCountry,
                     userPostal_code: data.userPostal_code,
+                    userTshirtSize: data.userTshirtSize ? data.userTshirtSize  : null,
                   }}
                   validationSchema={createEventSchema}
                   onSubmit={(values: any) => {
@@ -1123,6 +1135,28 @@ const UpdateEvent = (event: any) => {
                             <p>Postal code</p>
                           </div>
 
+                          <div className='flex items-center justify-start '>
+                            <div className='toggle-switch '>
+                              <Field
+                                name='userTshirtSize'
+                                type='checkbox'
+                                className='my-4'
+                              >
+                                {({ field }: any) => (
+                                  <input
+                                    type='checkbox'
+                                    value={field.value}
+                                    defaultChecked={data.userTshirtSize ? data.userTshirtSize : false}
+                                    onChange={field.onChange(field.name)}
+                                    className='toggle-input'
+                                  />
+                                )}
+                              </Field>
+                              <label className='toggle-label' />
+                            </div>
+                            <p>T-Shirt Size</p>
+                          </div>
+
                           <div className='relative flex items-center justify-start space-x-3'>
                             <label htmlFor='' className='form_label w-full'>
                               Select id type:
@@ -1142,7 +1176,6 @@ const UpdateEvent = (event: any) => {
                                 {data.userId_type ? data.userId_type : 'None'}
                               </option>
                               <option value='NID'>NID</option>
-
                               <option value='passportID'>Passport ID</option>
                               <option value='studentID'>Student ID</option>
                               <option value='jobID'>Job ID</option>
