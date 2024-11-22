@@ -102,16 +102,16 @@ const TicketOrderForm = ({ event }: any) => {
       : Yup.string(),
   });
   const createOrderHandler = (data: any) => {
-    if (selectedTicket.isAcceptContribution && contributionAmount < 1500) {
-      dispatch(
-        setPopup({
-          type: "failed",
-          message: "Minimum contribution amount is 1500 BDT",
-          show: true,
-        })
-      );
-      return;
-    }
+    // if (selectedTicket.isAcceptContribution && contributionAmount < 1500) {
+    //   dispatch(
+    //     setPopup({
+    //       type: "failed",
+    //       message: "Minimum contribution amount is 1500 BDT",
+    //       show: true,
+    //     })
+    //   );
+    //   return;
+    // }
     axios
       .post("ticket-order/", data, {
         headers: {
@@ -945,7 +945,7 @@ const TicketOrderForm = ({ event }: any) => {
                           }}
                         />
                       </div>
-                      <div className="text-left space-y-2">
+                      {/* <div className="text-left space-y-2">
                         <p>
                           Family: {calculateTotalQuantityByCategory().family}
                           persons
@@ -963,7 +963,7 @@ const TicketOrderForm = ({ event }: any) => {
                         <p>
                           Total Quantity: {calculateTotalQuantity()} persons
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                     <button
                       className="py-2 mt-8 mb-2 px-2 w-fit rounded-md border-[1px] border-brand_color bg-gray-800 hover:bg-brand_color text-white"
