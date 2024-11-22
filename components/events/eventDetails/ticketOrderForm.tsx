@@ -534,7 +534,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   <div className="grid grid-cols-4 gap-4 items-center">
                                     <div className="col-span-2">
                                       <p className="text-md">
-                                        Souvenir: (
+                                        Additional Souvenir: (
                                         {selectedTicket.priceSouvenir} BDT)
                                       </p>
                                     </div>
@@ -576,7 +576,7 @@ const TicketOrderForm = ({ event }: any) => {
                                 )}
 
                                 {/* T-Shirt Amount */}
-                                {selectedTicket.isTShirt ? (
+                                {/* {selectedTicket.isTShirt ? (
                                   <div className="grid grid-cols-4 gap-4 items-center">
                                     <div className="col-span-2">
                                       <p className="text-md">
@@ -619,7 +619,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   </div>
                                 ) : (
                                   ""
-                                )}
+                                )} */}
                               </div>
                             ) : (
                               ""
@@ -650,8 +650,8 @@ const TicketOrderForm = ({ event }: any) => {
                                         setContributionAmount(amount);
                                       }}
                                       onBlur={() => {
-                                        if (contributionAmount < 1500) {
-                                          setContributionAmount(1500);
+                                        if (contributionAmount < 0) {
+                                          setContributionAmount(0);
                                         }
                                       }}
                                       className="w-16 text-black px-2 py-1 border rounded"
@@ -662,11 +662,11 @@ const TicketOrderForm = ({ event }: any) => {
                                     <span>{contributionAmount} BDT</span>
                                   </div>
                                 </div>
-                                {contributionAmount < 1500 && (
+                                {/* {contributionAmount < 1500 && (
                                   <p className="text-red-500 text-sm mt-1">
                                     Minimum contribution amount is 1500 BDT.
                                   </p>
-                                )}
+                                )} */}
                               </div>
                             ) : (
                               ""
@@ -730,7 +730,7 @@ const TicketOrderForm = ({ event }: any) => {
                           {userId_type && (
                             <div className="flex items-center justify-start">
                               <p className="w-full text-start capitalize">
-                                {userId_type}
+                                {userId_type == "studentID" ? "Student ID" : userId_type}
                               </p>
                               <div className="relative w-full">
                                 <Field
