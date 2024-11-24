@@ -8,6 +8,7 @@ import { setPopup } from 'redux/slices/popupslice';
 import { register } from 'redux/slices/userSlice';
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from 'react';
+import { fbEvents } from '../utils/analytics';
 
 import * as Yup from 'yup';
 import GoogleAuth from '../auth/GoogleAuth';
@@ -48,6 +49,13 @@ const SingUp = ({ setAuth }: any) => {
       setIsLoadingG(false);
     }
   };
+
+  const handleSignUp = () => {
+    // Your sign up logic here
+    
+    // Track the sign up event
+    fbEvents.signUp()
+  }
 
 
   return (
@@ -198,7 +206,9 @@ const SingUp = ({ setAuth }: any) => {
               <button
                 className='w-full cursor-pointer rounded-md hover:text-brand_color hover:bg-white border-[1px] hover:border-brand_color bg-brand_color py-2 text-center text-xl font-bold text-white shadow-md xl:text-common'
                 type='submit'
+                onClick={handleSignUp}
               >
+
                 Sign Up
               </button>
               <div>

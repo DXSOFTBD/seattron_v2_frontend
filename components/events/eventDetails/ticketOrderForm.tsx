@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import axios from "@/axios/config";
 import { useAppDispatch } from "redux/hooks";
 import { setPopup } from "redux/slices/popupslice";
+import { fbEvents } from "@/components/utils/analytics";
 
 const TicketOrderForm = ({ event }: any) => {
   const {
@@ -49,6 +50,7 @@ const TicketOrderForm = ({ event }: any) => {
   const [tshirtTotalPrice, setTShirtTotalPrice] = useState(0);
 
   const [contributionAmount, setContributionAmount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Calculate total amount
   const calculateTotalAmount = () => {
@@ -204,6 +206,14 @@ const TicketOrderForm = ({ event }: any) => {
       });
   };
   console.log(selectedTicket);
+
+
+  const handleAddToCart = () => {
+    // Your add to cart logic here
+
+    // Track the add to cart event
+    fbEvents.addToCart(totalPrice, 'BDT')
+  }
 
   return (
     <div
@@ -562,6 +572,7 @@ const TicketOrderForm = ({ event }: any) => {
                                             quantity *
                                             selectedTicket.priceSouvenir
                                           );
+                                          
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
                                       />
