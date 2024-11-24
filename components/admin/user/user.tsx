@@ -1,5 +1,5 @@
 import Table from 'rc-table';
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsPlusCircle } from 'react-icons/bs';
 import Search from '../../common/Search';
 import TablePagination from '../../ui/TablePagination';
