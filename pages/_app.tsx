@@ -19,7 +19,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
 
   return (
     <>
-      <Script
+      {/* <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-J4WSPVETKF"
         strategy="afterInteractive"
       />
@@ -31,7 +31,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
 
           gtag('config', 'G-J4WSPVETKF');
         `}
-      </Script>
+      </Script> */}
       <Provider store={store}>
 
         <Head />
