@@ -23,7 +23,7 @@ const Navbar: React.FC<{}> = () => {
 
   const userInfo = useAppSelector((state) => state.userReducer.userInfo);
   const handleMobileMenu = () => {
-    setIsOpenMobileMenu(!isOpenMobileMenu);
+    setIsOpenMobileMenu(!isOpenMobileMenu); 
   };
 
   // const notifications = [

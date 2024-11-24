@@ -19,6 +19,7 @@
     "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
     "next": "13.0.0",
+    "next-auth": "^4.24.10",
     "next-seo": "^6.1.0",
     "rc-pagination": "^3.2.0",
     "rc-progress": "^3.4.1",
