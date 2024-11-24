@@ -20,16 +20,16 @@ const Login = ({ setAuth }: any) => {
 
         {/* google signing div */}
 
-        <div className=' flex w-full cursor-pointer items-center rounded-lg  hover:bg-gray-200 py-2 pl-2 text-lg  text-gray-600 drop-shadow-md bg-white xl:text-common'>
+        {/* <div className=' flex w-full cursor-pointer items-center rounded-lg  hover:bg-gray-200 py-2 pl-2 text-lg  text-gray-600 drop-shadow-md bg-white xl:text-common'>
           <FcGoogle />
           <div className='w-full text-center'>Continue with Google</div>
-        </div>
+        </div> */}
 
         {/*    Facebook signing div */}
-        <div className='flex w-full cursor-pointer items-center rounded-lg bg-blue-600 py-2  pl-2 text-center text-lg  text-white hover:bg-blue-500 xl:text-common'>
+        {/* <div className='flex w-full cursor-pointer items-center rounded-lg bg-blue-600 py-2  pl-2 text-center text-lg  text-white hover:bg-blue-500 xl:text-common'>
           <RiFacebookCircleFill className='text-white' />
           <div className='w-full text-center'>Continue with Facebook</div>
-        </div>
+        </div> */}
 
         {/* Email signing div */}
         <div

@@ -142,6 +142,17 @@ const Orders = () => {
       width: 200,
     },
     {
+      title: 'Guest',
+      dataIndex: 'guestPrimaryQty',
+      className: 'm-2',
+      key: 'package',
+      align: 'center',
+      width: 200,
+      render: (guestPrimaryQty: any) => (
+        <div className=''>{guestPrimaryQty}</div>
+      ),
+    },
+    {
       title: 'Paid',
       dataIndex: 'paid',
       className: 'm-2',
@@ -153,10 +164,10 @@ const Orders = () => {
       ),
     },
     {
-      title: 'price',
+      title: 'Price',
       className: '',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'total_amount',
+      key: 'total_amount',
       align: 'center',
       width: 200,
     },

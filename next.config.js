@@ -4,7 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['api.seattron.com', 'localhost'],
+    domains: ['api.seattron.com', 'localhost:3000'],
   },
 };
 

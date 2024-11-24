@@ -4,14 +4,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 const MobileNav = ({ handleMobileMenu, isOpenMobileMenu }: any) => {
   return (
     <div
-      className={`h-screen  mobile_navigation absolute right-0 top-0 bg-gray-900 transition-all duration-1000 z-[2000] ${
-        isOpenMobileMenu ? 'w-screen' : 'w-0'
-      }`}
+      className={`h-screen  mobile_navigation absolute right-0 top-0 bg-gray-900 transition-all duration-1000 z-[2000] ${isOpenMobileMenu ? 'w-screen' : 'w-0'
+        }`}
     >
       <div
-        className={`text-white float-right m-4 text-2xl ${
-          isOpenMobileMenu ? 'visible' : 'invisible'
-        }`}
+        className={`text-white float-right m-4 text-2xl ${isOpenMobileMenu ? 'visible' : 'invisible'
+          }`}
         onClick={() => handleMobileMenu()}
       >
         <AiOutlineClose />

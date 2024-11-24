@@ -8,11 +8,13 @@ import { Provider } from 'react-redux';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Skeleton from '@/components/common/skeleton';
+import { SessionProvider } from "next-auth/react";
+
 const Toast = dynamic(import('@/components/common/toast'));
 
 const Noop: FC<{ children?: ReactNode }> = ({ children }) => <>{children}</>;
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   const Layout = (Component as any).Layout || Noop;
 
   return (
@@ -36,7 +38,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Toast>
           <Suspense fallback={<Skeleton />}>
             <Layout pageProps={pageProps}>
-              <Component {...pageProps} />
+              <SessionProvider session={session}>
+                <Component {...pageProps} />
+              </SessionProvider>
             </Layout>
           </Suspense>
         </Toast>
