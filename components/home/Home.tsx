@@ -5,6 +5,7 @@ import FeaturedEvent from './featuredEvent';
 import Footer from './footer';
 import PreviousEvents from './previousEvents';
 import UpcomingEvents from './upcomingEvents';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const Home = ({ upcomingEvents, pastEvents }: any) => {
   let featuredEvents = upcomingEvents.filter(
@@ -12,7 +13,9 @@ const Home = ({ upcomingEvents, pastEvents }: any) => {
   );
   // console.log(upcomingEvents)
   return (
+    
     <main className='bg-white text-center px-auto mx-auto'>
+      <GoogleAnalytics gaId="G-4CYE7CPGHN" />
       <Banner />
 
       {featuredEvents.length > 0 && (
