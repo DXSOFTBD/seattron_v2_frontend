@@ -6,6 +6,7 @@ import Footer from './footer';
 import PreviousEvents from './previousEvents';
 import UpcomingEvents from './upcomingEvents';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { fbEvents } from '../utils/analytics';
 
 const Home = ({ upcomingEvents, pastEvents }: any) => {
   let featuredEvents = upcomingEvents.filter(
@@ -16,6 +17,7 @@ const Home = ({ upcomingEvents, pastEvents }: any) => {
     
     <main className='bg-white text-center px-auto mx-auto'>
       <GoogleAnalytics gaId="G-4CYE7CPGHN" />
+      
       <Banner />
 
       {featuredEvents.length > 0 && (
