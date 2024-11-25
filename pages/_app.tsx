@@ -9,10 +9,12 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import Skeleton from '@/components/common/skeleton';
 import { SessionProvider } from "next-auth/react";
-import MetaPixel from '@/components/metaPixel/MetaPixel';
+
 import { pageview } from '@/components/utils/analytics'; 
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import MetaPixel from '@/components/metaPixel/MetaPixel';
+import GoogleTag from '@/components/googleTag/GoogleTag';
 
 const Toast = dynamic(import('@/components/common/toast'));
 
@@ -36,6 +38,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
 
   return (
     <>
+      <GoogleTag />
       <MetaPixel />
       <Provider store={store}>
 
