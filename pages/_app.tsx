@@ -1,59 +1,69 @@
 import '../styles/globals.css';
-import { FC, ReactNode, Suspense } from 'react';
+import { FC, ReactNode, Suspense, useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import Head from '../components/common/Head/Head';
-import { store } from 'redux/store';
-import { Provider } from 'react-redux';
-
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Script from 'next/script';
+import { Provider } from 'react-redux';
+import { store } from 'redux/store';
+
+import Head from '../components/common/Head/Head';
 import Skeleton from '@/components/common/skeleton';
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from 'next-auth/react';
 import MetaPixel from '@/components/metaPixel/MetaPixel';
-import { pageview } from '@/components/utils/analytics'; 
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { pageview } from '@/components/utils/analytics';
 
-const Toast = dynamic(import('@/components/common/toast'));
+// Dynamically import the Toast component
+const Toast = dynamic(() => import('@/components/common/toast'), { ssr: false });
 
+// Define a default layout wrapper
 const Noop: FC<{ children?: ReactNode }> = ({ children }) => <>{children}</>;
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
+  // Get the Layout property from the component or fallback to Noop
   const Layout = (Component as any).Layout || Noop;
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     // Track page views on route change
     const handleRouteChange = () => {
-      pageview()
-    }
+      pageview();
+    };
 
-    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <>
+      {/* Add MetaPixel */}
       <MetaPixel />
-      <Provider store={store}>
 
+      {/* Redux Provider */}
+      <Provider store={store}>
+        {/* SEO Head */}
         <Head />
+
+        {/* Toast Notifications */}
         <Toast>
+          {/* Suspense with a fallback skeleton */}
           <Suspense fallback={<Skeleton />}>
-            <Layout pageProps={pageProps}>
+            {/* Apply Layout Wrapper */}
+            <Layout>
+              {/* Session Provider for NextAuth */}
               <SessionProvider session={session}>
-                
+                {/* Render the actual page */}
                 <Component {...pageProps} />
               </SessionProvider>
             </Layout>
           </Suspense>
         </Toast>
-
       </Provider>
     </>
   );
-}
+};
 
 export default MyApp;
+
+
