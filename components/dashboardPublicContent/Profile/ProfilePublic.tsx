@@ -14,7 +14,9 @@ const ProfilePublic = () => {
           <div className="mt-20 w-full">
             <Formik
               initialValues={{
-                term: "",
+                bankName: "",
+                bankAccountNumber: "",
+                bankAccountTitle: "",
               }}
               //   validationSchema={termSchema}
               onSubmit={(values: any) => {
