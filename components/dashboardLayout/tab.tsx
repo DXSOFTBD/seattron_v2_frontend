@@ -68,8 +68,6 @@
 
 
 'use client';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import {
   MdMoney,
@@ -81,7 +79,7 @@ import ProfilePublic from '../dashboardPublicContent/Profile/ProfilePublic';
 import HistoryPublic from '../dashboardPublicContent/History/HistoryPublic';
 import AttendedEventsPublic from '../dashboardPublicContent/AttendedEvents/AttendedEventsPublic';
 import DownloadTicketsPublic from './../dashboardPublicContent/DownloadTickets/DownloadTicketsPublic';
-
+import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 
 const Tab = () => {
   const items = [
@@ -89,7 +87,7 @@ const Tab = () => {
       name: 'Profile',
       path: 'profile',
       icon: MdSell,
-      component: <ProfilePublic />, // Add the respective component here
+      component: <ProfilePublic />,
     },
     {
       name: 'History',
@@ -111,21 +109,36 @@ const Tab = () => {
     },
   ];
 
-  const [activeTab, setActiveTab] = useState('profile'); // Default active tab
+  const [activeTab, setActiveTab] = useState('profile'); 
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const toggleSidebar = () => setIsSidebarVisible(!isSidebarVisible);
 
   return (
-    <div className='flex'>
+    <div className="flex">
       {/* Sidebar */}
       <div
-        className={`w-[200px] block border-gray-100 pl-primary py-primary bg-brand_gradient
-          transition-all duration-200 h-screen text-black p-2`}
+        className={`fixed lg:static top-0 left-0 z-40 w-[200px] h-screen bg-brand_gradient border-gray-100 pl-primary py-primary
+          text-black transition-transform duration-300 ${
+            isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
+        {/* Toggle Button in Sidebar */}
+        <div className="flex justify-start items-center mt-20 mb-4 lg:hidden m-2">
+          
+          <button
+            onClick={toggleSidebar}
+            className="p-2 bg-gray-200 rounded-lg text-black"
+          >
+            <AiOutlineClose size={20} />
+          </button>
+        </div>
         <div>
           {items.map((item) => (
             <div
               key={item.name}
               onClick={() => setActiveTab(item.path)} // Set active tab on click
-              className={`flex items-center justify-start space-x-2 px-2 py-2 relative cursor-pointer hover:bg-white hover:text-black 
+              className={`flex items-center justify-start space-x-2 mx-1 px-2 py-2 relative cursor-pointer hover:bg-white hover:text-black 
                 ${
                   activeTab === item.path
                     ? 'relative active_menu bg-white text-black rounded-l-lg'
@@ -137,14 +150,23 @@ const Tab = () => {
                   activeTab === item.path ? 'active_menu_icon' : 'menu_icon'
                 }`}
               />
-              <p className='paragraph'>{item.name}</p>
+              <p className="paragraph">{item.name}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className='flex-1 p-4'>
+      <div className="flex-1 p-4">
+       
+        {!isSidebarVisible && (
+          <button
+            onClick={toggleSidebar}
+            className="p-2 bg-gray-200 rounded-lg text-black lg:hidden mb-4"
+          >
+            <AiOutlineMenu size={20} />
+          </button>
+        )}
         {items.find((item) => item.path === activeTab)?.component}
       </div>
     </div>
@@ -152,5 +174,3 @@ const Tab = () => {
 };
 
 export default Tab;
-
-
