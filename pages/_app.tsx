@@ -8,9 +8,11 @@ import { store } from 'redux/store';
 
 import Head from '../components/common/Head/Head';
 import Skeleton from '@/components/common/skeleton';
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from "next-auth/react";
+
+import { pageview } from '@/components/utils/analytics'; 
 import MetaPixel from '@/components/metaPixel/MetaPixel';
-import { pageview } from '@/components/utils/analytics';
+import GoogleTag from '@/components/googleTag/GoogleTag';
 
 // Dynamically import the Toast component
 const Toast = dynamic(() => import('@/components/common/toast'), { ssr: false });
@@ -37,7 +39,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
 
   return (
     <>
-      {/* Add MetaPixel */}
+      <GoogleTag />
       <MetaPixel />
 
       {/* Redux Provider */}
