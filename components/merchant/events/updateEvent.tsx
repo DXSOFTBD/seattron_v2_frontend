@@ -162,7 +162,7 @@ const UpdateEvent = (event: any) => {
     userCity: Yup.mixed(),
     userCountry: Yup.mixed(),
     userPostal_code: Yup.mixed(),
-    userTshirtSize: Yup.array(),
+    // userTshirtSize: Yup.array(),
   });
 
   return (
@@ -454,7 +454,7 @@ const UpdateEvent = (event: any) => {
                     userCity: data.userCity,
                     userCountry: data.userCountry,
                     userPostal_code: data.userPostal_code,
-                    userTshirtSize: data.userTshirtSize ? data.userTshirtSize  : null,
+                    // userTshirtSize: data.userTshirtSize ? data.userTshirtSize  : null,
                   }}
                   validationSchema={createEventSchema}
                   onSubmit={(values: any) => {
