@@ -23,7 +23,6 @@ import Loader from '@/components/common/Loader';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { ImWarning } from 'react-icons/im';
 import { formats, modules } from '@/components/common/editor';
-import { convert } from 'html-to-text';
 
 const UpdateEvent = (event: any) => {
   const data = event.eventData.data;
