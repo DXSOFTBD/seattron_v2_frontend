@@ -408,7 +408,7 @@ const SingleEvent = ({ eventData }: any) => {
               </div>
 
             </div>
-            <p className='dashboard_secondary_title pb-2 pt-4'>Event Description</p>
+            <p className='dashboard_secondary_title pb-2 pt-4'>Event Details</p> 
             <div
               className='text-sm'
               dangerouslySetInnerHTML={{
