@@ -23,6 +23,7 @@ import Loader from '@/components/common/Loader';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { ImWarning } from 'react-icons/im';
 import { formats, modules } from '@/components/common/editor';
+import { convert } from 'html-to-text';
 
 const UpdateEvent = (event: any) => {
   const data = event.eventData.data;
@@ -240,9 +241,9 @@ const UpdateEvent = (event: any) => {
                     <small>
                       {eventData.eventTime
                         ? format(
-                            new Date(eventData.eventTime),
-                            "MMM dd 'at' hh:MM a"
-                          )
+                          new Date(eventData.eventTime),
+                          "MMM dd 'at' hh:MM a"
+                        )
                         : null}
                     </small>
                   </div>
@@ -251,9 +252,9 @@ const UpdateEvent = (event: any) => {
                     <small>
                       {eventData.eventEndTime
                         ? format(
-                            new Date(eventData.eventEndTime),
-                            "MMM dd 'at' hh:MM a"
-                          )
+                          new Date(eventData.eventEndTime),
+                          "MMM dd 'at' hh:MM a"
+                        )
                         : null}
                     </small>
                   </div>
@@ -529,7 +530,7 @@ const UpdateEvent = (event: any) => {
                           <Field name='details' className='my-4'>
                             {({ field }: any) => (
                               <ReactQuill
-                                // defaultValue={data.details}
+                                value={field.value}
                                 onChange={field.onChange(field.name)}
                                 className=' my-4'
                                 formats={formats}
@@ -818,7 +819,7 @@ const UpdateEvent = (event: any) => {
                                 />
                                 <div>
                                   {errors.ageRestriction &&
-                                  touched.ageRestriction ? (
+                                    touched.ageRestriction ? (
                                     <small className='text-red-400 mt-1'>
                                       {errors.ageRestriction}
                                     </small>
