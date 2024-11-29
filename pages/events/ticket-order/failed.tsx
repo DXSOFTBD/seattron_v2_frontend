@@ -18,7 +18,7 @@ const Failed = () => {
           </div>
           <CgDanger className='h-12 w-12 text-red-600 mx-auto px-auto my-2' />
           <div>
-            <p>We could not book your ticket</p>
+            <p>Unable to book your ticket</p>
             <small>please try again</small>
           </div>
           <Link href='/events'>
