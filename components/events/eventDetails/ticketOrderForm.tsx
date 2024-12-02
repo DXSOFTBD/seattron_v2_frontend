@@ -45,7 +45,7 @@ const TicketOrderForm = ({ event }: any) => {
   const [souvenirQuantity, setSouvenirQuantity] = useState(0);
   const [souvenirTotalPrice, setSouvenirTotalPrice] = useState(0);
 
-  const [isTShirt, setIsTshirt] = useState(false);
+  const [isTShirt, setIsTshirt] = useState(true);
   const [tshirtQuantity, setTShirtQuantity] = useState(0);
   const [tshirtTotalPrice, setTShirtTotalPrice] = useState(0);
 
