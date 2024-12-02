@@ -861,7 +861,7 @@ const TicketOrderForm = ({ event }: any) => {
                           )}
                           {userOccupation && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Occupation</p>
+                              <p className="w-full text-start"> Occupation</p> 
                               <div className="relative w-full">
                                 <Field
                                   name="occupation"
