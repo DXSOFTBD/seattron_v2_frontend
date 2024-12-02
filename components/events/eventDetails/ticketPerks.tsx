@@ -21,7 +21,7 @@ const TicketPerks = ({ event }: any) => {
           <div className='flex md:flex-row space-x-2 md:space-x-4 space-y-4 lg:space-y-0 flex-wrap justify-center w-full h-full'>
             {event.tickets.map((ticket: any) => (
               <div
-                className='text-white bg-gray-900 h-[320px] lg:h-350 w-255 rounded-md relative overflow-hidden'
+                className='text-white bg-gray-900 h-[320px] lg:h-450 w-350 rounded-md relative overflow-hidden'
                 key={ticket._id}
               >
                 {ticket.price === 0 &&
@@ -31,7 +31,7 @@ const TicketPerks = ({ event }: any) => {
                   <p className='ui_title'>{ticket.package}</p>
                   <p className='ui_title'>BDT {ticket.price}</p>
                 </div>
-                <div className='text-start rich_text'>
+                <div className='text-start rich_text overflow-auto max-h-[800px] whitespace-pre-wrap break-words'>
                   <div dangerouslySetInnerHTML={{ __html: ticket.details }} />
                 </div>
               </div>
@@ -52,13 +52,13 @@ const TicketPerks = ({ event }: any) => {
                   <p className='ui_title'>{ticket.package}</p>
                   <p className='ui_title'>BDT {ticket.price}</p>
                 </div>
-                <div className='text-start text-sm lg:text-md rich_text'>
+                {/* <div className='text-start text-sm lg:text-md rich_text'>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: ticket.details,
                     }}
                   />
-                </div>
+                </div> */}
               </div>
             ))
             : null}
