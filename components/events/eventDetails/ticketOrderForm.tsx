@@ -827,7 +827,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   <option>Select</option>
                                   <option value="male">Male</option>
                                   <option value="female">Female</option>
-                                  <option value="other">Other</option>
+                                  {/* <option value="other">Other</option> */}
                                 </Field>
                                 <div>
                                   {errors.gender && touched.gender ? (
@@ -861,7 +861,7 @@ const TicketOrderForm = ({ event }: any) => {
                           )}
                           {userOccupation && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Occupation</p>
+                              <p className="w-full text-start"> Occupation</p> 
                               <div className="relative w-full">
                                 <Field
                                   name="occupation"

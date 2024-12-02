@@ -21,7 +21,7 @@ const TicketPerks = ({ event }: any) => {
           <div className='flex md:flex-row space-x-2 md:space-x-4 space-y-4 lg:space-y-0 flex-wrap justify-center w-full h-full'>
             {event.tickets.map((ticket: any) => (
               <div
-                className='text-white bg-gray-900 h-[120px] lg:h-50 w-350 rounded-md relative overflow-hidden'
+                className='text-white bg-gray-900 h-[120px] lg:h-50 w-250 rounded-md relative overflow-hidden'
                 key={ticket._id}
               >
                 {ticket.price === 0 &&
