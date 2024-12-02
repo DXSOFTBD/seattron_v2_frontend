@@ -32,7 +32,7 @@ const EventDescription = ({ event }: any) => {
                 <p>Duration:</p>
               </div>
               <div  className="md:-ml-60">
-                <p>{event.duration}</p>
+                <p>{event.eventDuration} Hrs</p>
               </div>
             </div>
             <div className="grid grid-cols-2 text-left">

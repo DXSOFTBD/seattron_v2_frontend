@@ -112,14 +112,14 @@ const UpdateEvent = (event: any) => {
   const createEventSchema = Yup.object().shape({
     name: Yup.string(),
     thumb: Yup.mixed()
-      .test('fileSize', 'Image size will be less than 1 MB', (value) =>
+      .test('fileSize', 'Image size need to be less than 1 MB', (value) =>
         value?.size ? value.size <= ThumbSize : true
       )
       .test('fileFormat', 'Unsupported Format', (value) =>
         value?.type ? SUPPORTED_FORMATS.includes(value.type) : true
       ),
     cover: Yup.mixed()
-      .test('fileSize', 'Image size will be less than 1 MB', (value) =>
+      .test('fileSize', 'Image size need to be less than 1 MB', (value) =>
         value?.size ? value.size <= CoverSize : true
       )
       .test('fileFormat', 'Unsupported Format', (value) =>
@@ -127,7 +127,7 @@ const UpdateEvent = (event: any) => {
       ),
 
     footer: Yup.mixed()
-      .test('fileSize', 'Image size will be less than 1 MB', (value) =>
+      .test('fileSize', 'Image size need to be less than 1 MB', (value) =>
         value?.size ? value.size <= FooterSize : true
       )
       .test('fileFormat', 'Unsupported Format', (value) =>

@@ -827,7 +827,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   <option>Select</option>
                                   <option value="male">Male</option>
                                   <option value="female">Female</option>
-                                  <option value="other">Other</option>
+                                  {/* <option value="other">Other</option> */}
                                 </Field>
                                 <div>
                                   {errors.gender && touched.gender ? (
