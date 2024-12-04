@@ -276,8 +276,8 @@ const TicketOrderForm = ({ event }: any) => {
                     country: values.country,
                     postal_code: values.postal_code,
                     // guest_total_quantity: totalQuantity,
-                    contribution_amount: contributionAmount, // Add contribution amount
-                    souvenir_quantity: souvenirQuantity, // Add souvenir quantity
+                    contributionAmount: contributionAmount, // Add contribution amount
+                    souvenirQty: souvenirQuantity, // Add souvenir quantity
                     total_amount: totalAmount, // Add total amount
                     isGuestPrimary: selectedTicket.isGuestPrimary,
                     guestPrimaryQty: calculateTotalQuantityByCategory().family, // Add family quantity
@@ -287,7 +287,6 @@ const TicketOrderForm = ({ event }: any) => {
                     guestTertiaryQty: calculateTotalQuantityByCategory().childrenBelow10, // Add children below 10
                     isTShirt: selectedTicket.isTShirt,
                     isContribution: selectedTicket.isAcceptContribution,
-                    contributionAmount: contributionAmount
                   };
 
                   const newOrderDetails = Object.entries(orderDetails).reduce(
@@ -440,7 +439,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   <div className="grid grid-cols-4 gap-4 items-center">
                                     <div className="col-span-2">
                                       <p className="text-md">
-                                        Children over 10y: (
+                                        Children over 5y: (
                                         {selectedTicket.priceGuestSecondary ||
                                           0}{" "}
                                         BDT)
@@ -490,7 +489,7 @@ const TicketOrderForm = ({ event }: any) => {
                                   <div className="grid grid-cols-4 gap-4 items-center">
                                     <div className="col-span-2">
                                       <p className="text-md">
-                                        Children below 10y: (
+                                        Children below 5y: (
                                         {selectedTicket.priceGuestTertiary || 0}{" "}
                                         BDT)
                                       </p>
