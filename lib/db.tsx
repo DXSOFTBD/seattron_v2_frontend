@@ -271,6 +271,11 @@ export const eventCategory = [
     image: '/assets/category/Comedy.png',
     name: 'Comedy',
   },
+  {
+    _id: '7',
+    image: '/assets/category/Reunion.png',
+    name: 'Reunion',
+  },
 ];
 export const eventLineup = [
   {
