@@ -412,10 +412,7 @@ const TicketOrderForm = ({ event }: any) => {
                                         min="0"
                                         max="2"
                                         onChange={(e) => {
-                                          const quantity = Math.max(
-                                            0,
-                                            parseInt(e.target.value) || 0
-                                          );
+                                          const quantity = Math.min(2, Math.max(0, parseInt(e.target.value) || 0)); // Limit to 2
                                           setGuestQuantity(quantity);
                                           setGuestTotalPrice(
                                             quantity *
@@ -460,10 +457,7 @@ const TicketOrderForm = ({ event }: any) => {
                                         min="0"
                                         max="2"
                                         onChange={(e) => {
-                                          const quantity = Math.max(
-                                            0,
-                                            parseInt(e.target.value) || 0
-                                          );
+                                          const quantity = Math.min(2, Math.max(0, parseInt(e.target.value) || 0)); // Limit to 2
                                           setGuestSecondaryQuantity(quantity);
                                           setGuestSecondaryTotalPrice(
                                             quantity *
@@ -509,10 +503,7 @@ const TicketOrderForm = ({ event }: any) => {
                                         min="0"
                                         max="2"
                                         onChange={(e) => {
-                                          const quantity = Math.max(
-                                            0,
-                                            parseInt(e.target.value) || 0
-                                          );
+                                          const quantity = Math.min(2, Math.max(0, parseInt(e.target.value) || 0)); // Limit to 2
                                           setGuestTertiaryQuantity(quantity);
                                           setGuestTertiaryTotalPrice(
                                             quantity *
