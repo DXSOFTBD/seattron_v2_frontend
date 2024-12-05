@@ -40,7 +40,7 @@ const EventBannerLayout = ({ event }: any) => {
             </p>
             <p className='lg:py-2 py-0 text-brand_color text-sm lg:text-lg font-semibold'>
               <span className='text-white'>Opening:&nbsp; </span>
-              {format(new Date(event.eventTime), "Pp")}
+              {format(new Date(event.eventTime), "Pp")} 
             </p>
             <p className='lg:py-2 py-0 text-brand_color  text-sm lg:text-lg font-semibold'>
               <span className='text-white'>Closing:&nbsp; </span>

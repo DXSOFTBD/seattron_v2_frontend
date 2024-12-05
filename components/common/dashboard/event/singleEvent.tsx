@@ -440,7 +440,7 @@ const SingleEvent = ({ eventData }: any) => {
                   <p className='w-32'>Start Time:</p>
                   <small>
                     {data.eventTime
-                      ? format(new Date(data.eventTime), "MMM dd 'at' hh:MM a")
+                      ? format(new Date(data.eventTime), "Pp")
                       : null}
                   </small>
                 </div>
@@ -450,7 +450,7 @@ const SingleEvent = ({ eventData }: any) => {
                     {data.eventEndTime
                       ? format(
                         new Date(data.eventEndTime),
-                        "MMM dd 'at' hh:MM a"
+                        "Pp"
                       )
                       : null}
                   </small>
