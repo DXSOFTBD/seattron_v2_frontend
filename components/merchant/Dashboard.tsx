@@ -119,10 +119,10 @@ const Dashboard = (props: any) => {
       render: (paid: any) => <p className=''>{paid ? 'Yes' : 'NO'}</p>,
     },
     {
-      title: 'price',
+      title: 'Amount',
       className: '',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'total_amount',
+      key: 'total_amount',
       align: 'center',
     },
     {
