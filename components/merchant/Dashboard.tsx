@@ -79,16 +79,41 @@ const Dashboard = (props: any) => {
       render: (_id: any) => <p className=''>{_id}</p>,
     },
     {
-      title: 'Customer Details',
+      title: 'Name',
       dataIndex: 'name',
       className: 'px-2',
       key: 'name',
       align: 'center',
 
-      render: (name: any, { email }: any) => (
+      render: (name: any) => (
         <div>
           <p className=''>{name}</p>
+        </div>
+      ),
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      className: 'px-2',
+      key: 'email',
+      align: 'center',
+
+      render: (email: any) => (
+        <div>
           <p className=''>{email}</p>
+        </div>
+      ),
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+      className: 'px-2',
+      key: 'phone',
+      align: 'center',
+
+      render: (phone: any) => (
+        <div>
+          <p className=''>{phone}</p>
         </div>
       ),
     },
@@ -119,10 +144,60 @@ const Dashboard = (props: any) => {
       render: (paid: any) => <p className=''>{paid ? 'Yes' : 'NO'}</p>,
     },
     {
-      title: 'Amount',
+      title: 'Ticket Price',
+      className: '',
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+    },
+    {
+      title: 'Guest Ticket Price',
+      className: '',
+      dataIndex: 'ticket',
+      key: 'ticket',
+      align: 'center',
+      render: (ticket: any) => ticket ? ticket.priceGuestPrimary : 'N/A',
+    },
+    {
+      title: 'Guest Qty',
+      className: '',
+      dataIndex: 'guestPrimaryQty',
+      key: 'guestPrimaryQty',
+      align: 'center',
+    },
+    {
+      title: 'Children < 5Y Qty',
+      className: '',
+      dataIndex: 'guestTertiaryQty',
+      key: 'guestTertiaryQty',
+      align: 'center',
+    },
+    {
+      title: 'Contribution',
+      className: '',
+      dataIndex: 'contributionAmount',
+      key: 'contributionAmount',
+      align: 'center',
+    },
+    {
+      title: 'TTL Amount',
       className: '',
       dataIndex: 'total_amount',
       key: 'total_amount',
+      align: 'center',
+    },
+    {
+      title: 'Additional Souvenir Qty',
+      className: '',
+      dataIndex: 'souvenirQty',
+      key: 'souvenirQty',
+      align: 'center',
+    },
+    {
+      title: 'T-Shirt Size',
+      className: '',
+      dataIndex: 'tshirtSize',
+      key: 'tshirtSize',
       align: 'center',
     },
     {
