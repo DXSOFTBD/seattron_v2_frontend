@@ -270,6 +270,7 @@ const TicketOrderForm = ({ event }: any) => {
                     gender: values.gender,
                     id_type: userId_type,
                     id_number: values.id_number,
+                    batch_type: values.batch,
                     tshirtSize: values.tshirtSize,
                     occupation: values.occupation,
                     city: values.city,
@@ -562,7 +563,7 @@ const TicketOrderForm = ({ event }: any) => {
                                             quantity *
                                             selectedTicket.priceSouvenir
                                           );
-                                          
+
                                         }}
                                         className="w-16 text-black px-2 py-1 border rounded"
                                       />
@@ -692,60 +693,112 @@ const TicketOrderForm = ({ event }: any) => {
                         </div>
                         <div className="flex flex-col space-y-4 text-white ">
                           <div className="flex items-center justify-start">
-                            <p className="w-full text-start">Full Name</p>
+                            <p className="w-full text-start">Full Name*</p>
                             <div className="relative w-full">
                               <Field
                                 name="name"
                                 type="text"
-                                className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md outline-none"
+                                // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md outline-none"
+                                className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.name && touched.name ? 'border-red-500' : 'border-gray-300'}`}
                                 placeholder="Enter name"
                               />
+                              {/* {errors.name && touched.name ? (
+                                <small className="text-red-300 text-sm absolute left-0 top-8">
+                                  {errors.name}
+                                </small>
+                              ) : null} */}
 
-                              <div>
+                              {/* <div>
                                 {errors.name && touched.name ? (
                                   <small className="text-red-300 text-sm absolute left-0 top-8">
                                     {errors.name}
                                   </small>
                                 ) : null}
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                           <div className="flex items-center justify-start">
-                            <p className="w-full text-start"> Email</p>
+                            <p className="w-full text-start"> Email*</p>
                             <div className="relative w-full">
                               <Field
                                 name="email"
                                 type="email"
-                                className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.email && touched.email ? 'border-red-500' : 'border-gray-300'}`}
                                 placeholder="Enter email"
                               />
-                              <div>
+                              {/* <div>
                                 {errors.email && touched.email ? (
                                   <small className="text-red-300 text-sm absolute left-0 top-8">
                                     {errors.email}
                                   </small>
                                 ) : null}
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                           {userId_type && (
                             <div className="flex items-center justify-start">
                               <p className="w-full text-start capitalize">
-                                {userId_type == "studentID" ? "Student ID" : userId_type}
+                                {userId_type == "studentID" ? "ID (Student/Faculty)" : userId_type}
                               </p>
                               <div className="relative w-full">
                                 <Field
                                   name="id_number"
                                   className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.id_number && touched.id_number ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter your ID"
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.id_number && touched.id_number ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.id_number}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
+                              </div>
+                            </div>
+                          )}
+
+                          {userId_type && (
+                            <div className="flex items-center justify-start">
+                              <div className="w-full">
+                                <p className="text-start"> Batch</p>
+                              </div>
+                              <div className="relative w-full">
+                                <Field
+                                  name="batch"
+                                  type="batch"
+                                  as="select"
+                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  placeholder="Enter Batch"
+                                >
+                                  <option>Select Batch</option>
+                                  <option value="AE1">AE1</option>
+                                  <option value="AE2">AE2</option>
+                                  <option value="AE3">AE3</option>
+                                  <option value="AE4">AE4</option>
+                                  <option value="AE5">AE5</option>
+                                  <option value="AE6">AE6</option>
+                                  <option value="AE7">AE7</option>
+                                  <option value="AE8">AE8</option>
+                                  <option value="AE9">AE9</option>
+                                  <option value="AE10">AE10</option>
+                                  <option value="AE11">AE11</option>
+                                  <option value="AE12">AE12</option>
+                                  <option value="AE13">AE13</option>
+                                  <option value="AE14">AE14</option>
+                                  <option value="AE15">AE15</option>
+                                  <option value="AE16">AE16</option>
+                                  <option value="Faculty">Faculty</option>
+                                  <option value="EX-Faculty">EX Faculty</option>
+                                </Field>
+                                {/* <div>
+                                  {errors.batch && touched.batch ? (
+                                    <small className="text-red-300 text-sm absolute left-0 top-8">
+                                      {errors.batch}
+                                    </small>
+                                  ) : null}
+                                </div> */}
                               </div>
                             </div>
                           )}
@@ -760,7 +813,8 @@ const TicketOrderForm = ({ event }: any) => {
                                   name="tshirtSize"
                                   type="tshirtSize"
                                   as="select"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.tshirtSize && touched.tshirtSize ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter T-Shirt Size"
                                 >
                                   <option>Select Size</option>
@@ -770,143 +824,147 @@ const TicketOrderForm = ({ event }: any) => {
                                   <option value="XLarge">XL</option>
                                   <option value="XXLarge">XXL</option>
                                 </Field>
-                                <div>
+                                {/* <div>
                                   {errors.tshirtSize && touched.tshirtSize ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.tshirtSize}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
 
                           {userPhone && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Phone number</p>
+                              <p className="w-full text-start"> Phone number*</p>
                               <div className="relative w-full">
                                 <Field
                                   name="phone"
                                   type="phone"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
-                                  placeholder="Enter phone number"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.phone && touched.phone ? 'border-red-500' : 'border-gray-300'}`}
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.phone && touched.phone ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.phone}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
                           {userGender && (
                             <div className="flex items-center justify-start">
                               <div className="w-full">
-                                <p className="text-start"> Gender</p>
+                                <p className="text-start"> Gender*</p>
                               </div>
                               <div className="relative w-full">
                                 <Field
                                   name="gender"
                                   type="gender"
                                   as="select"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
-                                  placeholder="Enter Gender"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.gender && touched.gender ? 'border-red-500' : 'border-gray-300'}`}
                                 >
                                   <option>Select</option>
                                   <option value="male">Male</option>
                                   <option value="female">Female</option>
                                   {/* <option value="other">Other</option> */}
                                 </Field>
-                                <div>
+                                {/* <div>
                                   {errors.gender && touched.gender ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.gender}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
                           {userAge && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Age</p>
+                              <p className="w-full text-start"> Age*</p>
                               <div className="relative w-full">
                                 <Field
                                   name="age"
                                   type="number"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.age && touched.age ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter your age"
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.age && touched.age ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.age}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
                           {userOccupation && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Occupation</p> 
+                              <p className="w-full text-start"> Occupation*</p>
                               <div className="relative w-full">
                                 <Field
                                   name="occupation"
                                   type="occupation"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.occupation && touched.occupation ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter your occupation"
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.occupation && touched.occupation ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.occupation}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
 
                           {userCity && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> City</p>
+                              <p className="w-full text-start"> City*</p>
                               <div className="relative w-full">
                                 <Field
                                   name="city"
                                   type="city"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.city && touched.city ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter your city"
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.city && touched.city ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.city}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
                           {userCountry && (
                             <div className="flex items-center justify-start">
-                              <p className="w-full text-start"> Country</p>
+                              <p className="w-full text-start"> Country*</p>
                               <div className="relative w-full">
                                 <Field
                                   name="country"
                                   type="country"
-                                  className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  // className="bg-gray-50 text-gray-800 text-red border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300  px-2 rounded-md outline-none"
+                                  className={`bg-gray-50 text-gray-800 border-2 focus:outline-blue-300 focus:outline-1 text-sm py-1 h-d8 w-full md:w-300 px-2 rounded-md ${errors.country && touched.country ? 'border-red-500' : 'border-gray-300'}`}
                                   placeholder="Enter your country"
                                 />
-                                <div>
+                                {/* <div>
                                   {errors.country && touched.country ? (
                                     <small className="text-red-300 text-sm absolute left-0 top-8">
                                       {errors.country}
                                     </small>
                                   ) : null}
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           )}
