@@ -16,6 +16,8 @@ import { notificationByAgent } from 'redux/slices/notificationSlice';
 import { getLogsByAgent } from 'redux/slices/logSlice';
 import { getAgentAnalytics } from 'redux/slices/analyticsSlice';
 import StickerCard from '../common/dashboard/sticker-card';
+import { useFormatter } from 'next-intl';
+
 const Dashboard = (props: any) => {
   const [perPage, setPerPage] = useState(10);
   const [size, setSize] = useState(perPage);
@@ -66,6 +68,51 @@ const Dashboard = (props: any) => {
     // Normally you should get the data from the server
     return orders.slice((current - 1) * pageSize, current * pageSize);
   };
+
+  const getOrdersDataForChart = (orders: any[]) => {
+    const ordersData = orders.reduce((acc: Record<string, number>, order: any) => {
+      const date = format(new Date(order.createdAt), "dd/MM/yyyy"); // Format date as dd/mm/yyyy
+      acc[date] = (acc[date] || 0) + 1; // Count the number of orders per day
+      return acc;
+    }, {});
+
+    // Sort the dates in ascending order
+    const sortedDates = Object.keys(ordersData).sort((a, b) => {
+      const [dayA, monthA, yearA] = a.split('/').map(Number);
+      const [dayB, monthB, yearB] = b.split('/').map(Number);
+      return new Date(yearA, monthA - 1, dayA).getTime() - new Date(yearB, monthB - 1, dayB).getTime();
+    });
+
+    // Create sorted series based on sorted dates
+    const sortedSeries = sortedDates.map(date => ordersData[date]);
+
+    return {
+      categories: sortedDates, // Sorted dates for x-axis
+      series: sortedSeries, // Number of orders for y-axis
+    };
+  };
+
+  // Function to call the regenerateTicket API
+  const regenerateTicket = async (orderId: string) => {
+    try {
+      const response = await fetch(`/api/regenerateTicket/${orderId}`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to regenerate ticket');
+      }
+      const data = await response.json();
+      // Handle success (e.g., show a notification)
+      console.log('Ticket regenerated:', data);
+    } catch (error) {
+      // Handle error (e.g., show an error message)
+      console.error('Error regenerating ticket:', error);
+    }
+  };
+
+
+  // Inside your return statement, where you want to render the ColumnChart
+  const { categories, series } = getOrdersDataForChart(orders);
 
   const columns = [
     {
@@ -201,14 +248,28 @@ const Dashboard = (props: any) => {
       align: 'center',
     },
     {
-      title: 'CreatedAt',
+      title: 'Order Date',
       dataIndex: 'createdAt',
       className: 'm-2 min-w-32',
       key: 'createdAt',
       align: 'left',
       width: 200,
-      render: (createdAt: any) => <p> {format(new Date(createdAt), 'Pp')}</p>,
+      render: (createdAt: any) => <p>{format(new Date(createdAt), "do MMMM yyyy, hh:mm a")}</p>,
     },
+    {
+      title: 'Regenerate Ticket',
+      key: 'regenerate',
+      align: 'center',
+      render: (record: any) => (
+        <button
+          onClick={() => regenerateTicket(record._id)}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Regenerate
+        </button>
+      ),
+    },
+
   ];
 
   return (
@@ -237,8 +298,14 @@ const Dashboard = (props: any) => {
           </div>
           <div className='w-full '>
             <StickerCard
-              title='Total Sell'
-              value={Number(analytics.totalSoldAmount).toFixed(2)}
+              title='Total Sell Amount'
+              value={Number(analytics.totalTicketAmount).toFixed(2)}
+            />
+          </div>
+          <div className='w-full '>
+            <StickerCard
+              title='Total Ticket Sell Amount'
+              value={Number(analytics.totalTicketAmount).toFixed(2)}
             />
           </div>
           <div className='w-full '>
@@ -348,16 +415,10 @@ const Dashboard = (props: any) => {
           <div className='w-full h-full'>
             <ColumnChart
               colors={['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800']}
-              series={[
-                223, 324, 324, 234, 223, 324, 324, 234, 234, 123, 234, 234, 123,
-                324, 324, 234, 234, 123, 234, 234, 123, 324, 324, 234, 234, 123,
-                234, 234, 123,
-              ]}
-              categories={[
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17.18, 19,
-                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-              ]}
-              totalValue={2344}
+              series={series}
+              categories={categories}
+              totalValue={series.reduce((total: number, value: number) => total + value, 0)} // Total orders
+              title="Ticket Sales/Day"
             />
           </div>
         </div>
