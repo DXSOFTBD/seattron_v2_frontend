@@ -64,7 +64,7 @@ const Search: React.FC<SearchProps> = ({
         name='searchInput'
         id='search'
         className='py-2 px-4 outline-none  w-300 rounded-md bg-gray-200 border-[1px] border-brand_color text-black'
-        placeholder='Search'
+        placeholder=''
         aria-label='Search'
         onChange={(e: any) => {
           onSearch({ searchText: e.target.value });
