@@ -35,9 +35,12 @@ const Orders = () => {
   );
 
   const [searchedOrders, setSearchedOrders] = useState<any>([]);
+
+
   useEffect(() => {
     setSearchedOrders(orders);
   }, [orders]);
+
   // table config
   const [perPage, setPerPage] = useState(10);
   const [size, setSize] = useState(perPage);
@@ -95,12 +98,12 @@ const Orders = () => {
           email,
           phone,
         }: // country,
-        // city,
-        // gender,
-        // occupation,
-        // age,
-        // postal_code,
-        any
+          // city,
+          // gender,
+          // occupation,
+          // age,
+          // postal_code,
+          any
       ) => (
         <div className='text-start p-2'>
           <p className=''>Name: {name}</p>
@@ -288,7 +291,7 @@ const Orders = () => {
                 )}
               </div>
               <CSVLink
-                data={csvData}
+                data={searchedOrders ? searchedOrders : csvData}
                 className='bg-brand_color text-white text-lg px-4 py-2 rounded-md flex space-x-2 items-center'
               >
                 Export
@@ -317,7 +320,7 @@ const Orders = () => {
                 size={size}
                 setSize={setSize}
                 setCurrent={setCurrent}
-                data={orders}
+                data={searchedOrders}
               />
             </div>
           )}
